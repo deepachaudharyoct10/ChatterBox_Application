@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+    background: url(../public/bg_image.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: none;
+}
+
+::-webkit-scrollbar {
+    /* Customize the scrollbar width */
+    width:6px;
+}
+
+::-webkit-scrollbar-track {
+    /* Customize the scrollbar track */
+    background:#000;
+}
+
+::-webkit-scrollbar-thumb {
+    /* Customize the scrollbar thumb */
+    background:#fff;
+    border-radius: 10px;
+}
