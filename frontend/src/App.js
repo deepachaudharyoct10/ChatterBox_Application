@@ -3,9 +3,10 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client"
+import { setSocket } from "./redux/socketSlice";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,20 +27,25 @@ const router = createBrowserRouter([
 
 function App() {
   const {authUser}=  useSelector(store=>store.user);
-  const [socket, setSocket]= useState(null);
+  const {socket} = useSelector(store=>store.socket);
+  const dispatch = useDispatch();
   useEffect(()=>{
     if(authUser){
-      const socket= io('http://localhost:3000',{
+      const newSocket= io('http://localhost:8000',{
         query : {
           userId: authUser._id
         }
       });
-      setSocket(socket);
+      dispatch(setSocket(newSocket));
+      return ()=> newSocket.close();
+    } else if(socket){
+      socket.close();
+      dispatch(setSocket(null));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[authUser]);
   return (
-    <div className="p-4 h-screen
-     flex items-center justify-center">
+    <div className="p-0 sm:p-4 h-screen w-full flex items-center justify-center">
       <RouterProvider router={router}></RouterProvider>
     </div>
   );

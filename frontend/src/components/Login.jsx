@@ -43,42 +43,46 @@ const Login = () => {
         })
       }
   return (
-    <div className="w-96 mx-auto">
-      <div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
-      <h1 className='text-3xl font-bold text-center'>Login</h1>
+    <div className="w-full max-w-sm mx-auto px-4 sm:px-0">
+      <div className="text-center mb-6">
+        <h1 className="text-4xl font-extrabold text-primary tracking-wide">ChatterBox</h1>
+        <p className="text-neutral/60 text-sm mt-1">Let's Chat</p>
+      </div>
+      <div className='w-full p-6 rounded-lg shadow-xl bg-base-100 border border-base-300'>
+      <h1 className='text-3xl font-bold text-center text-neutral'>Login</h1>
 
       <form action="" onSubmit={onSubmitHandler}>
-       
+
 
         <div>
           <label className='label p-2'>
-            <span className='text-base label-text'>User Name</span>
+            <span className='text-base label-text text-neutral'>User Name</span>
           </label>
-          <input value={user.username} onChange={(e)=>setUser({...user,username:e.target.value})} className="w-full input-bordered h-10 rounded-md" type='text' placeholder='User Name'></input>
+          <input value={user.username} onChange={(e)=>setUser({...user,username:e.target.value})} className="w-full input input-bordered bg-base-200/50 h-10 rounded-md focus:outline-none focus:border-primary" type='text' placeholder='User Name'></input>
         </div>
 
 
         <div>
           <label className='label p-2'>
-            <span className='text-base label-text'>Password</span>
+            <span className='text-base label-text text-neutral'>Password</span>
           </label>
-          <input value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})} className="w-full input-bordered h-10 rounded-md" type='password' placeholder='Password'></input>
+          <input value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})} className="w-full input input-bordered bg-base-200/50 h-10 rounded-md focus:outline-none focus:border-primary" type='password' placeholder='Password'></input>
         </div>
 
-       
-      
-         <p className='text-center my-2'>Don't Hava an Account? <Link  to="/register">
+
+
+         <p className='text-center my-2 text-neutral'>Don't Hava an Account? <Link  to="/register" className="text-primary font-semibold">
         Signup
       </Link> </p>
-      
+
       <div>
-        <button type="submit" className='btn btn-block btn-sm mt-2 border border-slate-700'>
+        <button type="submit" className='btn btn-primary btn-block btn-sm mt-2 text-white hover:brightness-110 transition'>
           Login
         </button>
       </div>
       </form>
       </div>
-     
+
     </div>
   )
 }

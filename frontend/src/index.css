@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 body{
-    background: url(../public/bg_image.webp);
-    background-size: cover;
-    background-position: center;
-    background-repeat: none;
+    background: linear-gradient(135deg, #E9EDF2 0%, #D3DCE6 50%, #B8C6D6 100%);
+    min-height: 100vh;
 }
 
 ::-webkit-scrollbar {
@@ -15,11 +13,11 @@ body{
 
 ::-webkit-scrollbar-track {
     /* Customize the scrollbar track */
-    background:#000;
+    background:#E3E8EC;
 }
 
 ::-webkit-scrollbar-thumb {
     /* Customize the scrollbar thumb */
-    background:#fff;
+    background:#4A6FA5;
     border-radius: 10px;
 }
