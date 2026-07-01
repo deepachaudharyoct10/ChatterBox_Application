@@ -26,21 +26,13 @@ export const register = async(req,res)=>{
             return res.status(400).json({message:"User Already Exist , try new Id"});
         }
 
-        // profile photo 
-        //user literal for the accessing the username 
-        const maleProfilePhoto = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-
-        const femaleProfilePhoto = `https://avatar.iran.liara.run/public/girl?username=${username}`;
-
-
-        // if user does not exist then create the user 
+        // if user does not exist then create the user
         await User.create({
             fullName,
             username,
             password: hashedPassword,
-            profilePhoto: gender === "male" ? maleProfilePhoto: femaleProfilePhoto,
             gender,
-            
+
         })
 
 
