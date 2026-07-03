@@ -21,7 +21,7 @@ const useGetMessages = async() => {
         }
     }
     fetchMessages();
- },[selectedUser])
+ },[selectedUser, dispatch])
 }
 
 export default useGetMessages

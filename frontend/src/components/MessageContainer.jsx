@@ -11,7 +11,7 @@ const MessageContainer = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     return () => dispatch(setSelectedUser(null));
-  }, []);
+  }, [dispatch]);
   return (
     <>
       {selectedUser !== null ? (
