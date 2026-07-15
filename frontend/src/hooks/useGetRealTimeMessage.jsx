@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import { setMessages } from "../redux/messageSlice";
 import { addUnreadMessage, updateLastMessageTime } from "../redux/notificationSlice";
 
@@ -21,9 +22,25 @@ const useGetRealTimeMessage = () => {
             dispatch(updateLastMessageTime({ userId: newMessage.senderId, timestamp: Date.now() }));
         };
 
-        socket.on("newMessage", handleNewMessage);
+        const handleHiddenMessageGuessed = ({ correct, firstTry, autoRevealed, attemptsLeft }) => {
+            if (correct && firstTry) {
+                toast.success("🎯 Your hidden message was guessed correctly on the first try!");
+            } else if (correct) {
+                toast.success("🔓 Your hidden message was guessed correctly.");
+            } else if (autoRevealed) {
+                toast("🔓 The receiver ran out of attempts — your message was auto-revealed.");
+            } else {
+                toast.error(`❌ The receiver guessed your hidden message incorrectly. (${attemptsLeft} attempt${attemptsLeft === 1 ? "" : "s"} left)`);
+            }
+        };
 
-        return () => socket.off("newMessage", handleNewMessage);
+        socket.on("newMessage", handleNewMessage);
+        socket.on("hiddenMessageGuessed", handleHiddenMessageGuessed);
+
+        return () => {
+            socket.off("newMessage", handleNewMessage);
+            socket.off("hiddenMessageGuessed", handleHiddenMessageGuessed);
+        };
     }, [socket, messages, selectedUser, dispatch]);
 };
 

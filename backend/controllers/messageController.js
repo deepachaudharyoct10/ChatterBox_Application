@@ -112,10 +112,34 @@ export const guessMessage = async(req,res)=>{
         }
 
         const isCorrect = message.category === category;
+        const firstTry = message.attempts === 0;
 
+        let autoRevealed = false;
         if(isCorrect){
             message.revealed = true;
-            await message.save();
+        } else {
+            message.attempts += 1;
+            autoRevealed = message.attempts >= MAX_GUESS_ATTEMPTS;
+            if(autoRevealed){
+                message.revealed = true;
+            }
+        }
+        await message.save();
+
+        // let the sender know about every guess attempt, right or wrong
+        const senderSocketId = getReceiverSocketId(String(message.senderId));
+        if(senderSocketId){
+            io.to(senderSocketId).emit("hiddenMessageGuessed", {
+                messageId: message._id,
+                receiverId: message.receiverId,
+                correct: isCorrect,
+                firstTry,
+                autoRevealed,
+                attemptsLeft: Math.max(0, MAX_GUESS_ATTEMPTS - message.attempts),
+            });
+        }
+
+        if(isCorrect){
             return res.status(200).json({
                 correct: true,
                 revealed: true,
@@ -123,13 +147,6 @@ export const guessMessage = async(req,res)=>{
                 category: message.category,
             });
         }
-
-        message.attempts += 1;
-        const autoRevealed = message.attempts >= MAX_GUESS_ATTEMPTS;
-        if(autoRevealed){
-            message.revealed = true;
-        }
-        await message.save();
 
         return res.status(200).json({
             correct: false,
