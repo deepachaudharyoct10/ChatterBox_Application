@@ -12,8 +12,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+const allowedOrigins = ['http://localhost:3000', process.env.CLIENT_URL].filter(Boolean);
 const corsOption={
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials:true
 };
 

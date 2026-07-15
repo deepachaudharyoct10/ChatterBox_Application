@@ -5,11 +5,13 @@ import dotenv from "dotenv"
 
 dotenv.config({});
 
+const allowedOrigins = ['http://localhost:3000', process.env.CLIENT_URL].filter(Boolean);
+
 const app= express();
 const server = http.createServer(app);
 const io= new Server(server,{
     cors:{
-    origin:[process.env.CLIENT_URL || 'http://localhost:3000']
+    origin: allowedOrigins
     ,
     methods:['GET','POST'],
 },})

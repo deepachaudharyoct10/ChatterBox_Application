@@ -14,6 +14,21 @@ const messageModel = new mongoose.Schema({
     message:{
         type: String,
         required: true
+    },
+    isHidden:{
+        type: Boolean,
+        default: false
+    },
+    category:{
+        type: String,
+    },
+    revealed:{
+        type: Boolean,
+        default: false
+    },
+    attempts:{
+        type: Number,
+        default: 0
     }
 },{timestamps: true});
 
